@@ -14,6 +14,7 @@ Repositorio donde documento la resolución de máquinas de DockerLabs siguiendo 
 
 ## Máquinas resueltas
 
-| Máquina | Dificultad | Estado |
-|----------|------------|--------|
-| ChocolateFire | 🟡 Medium | ✅ |
+| Máquina       | Dificultad | Estado |
+| ------------- | ---------- | ------ |
+| ChocolateFire | 🟡 Medium  | ✅      |
+|               |            |        |
