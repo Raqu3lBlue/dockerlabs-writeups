@@ -6,10 +6,7 @@
 > **Autor del writeup:** Raquel Romero
 
 ---
-![ChocolateFire](./images/chocolatefire1.png)
-# 📖 Descripción
-
-Breve descripción de la máquina y del objetivo del laboratorio.
+![Descripcion](Images/chocolatefire1.png)
 
 ---
 
