@@ -1,12 +1,18 @@
 # ChocolateFire
-> **Plataforma:** DockerLabs  
-> **Dificultad:** 🟡 Medium 
-> **Sistema Operativo:** Linux 
-> **Fecha de resolución:** 22/07/2026 
-> **Autor del writeup:** Raquel Romero
+
+- **Plataforma:** DockerLabs 
+- **Dificultad:** 🟡 Medium 
+- **Sistema Operativo:** Linux 
+- **Fecha de resolución:** 22/07/2026 
+- **Autor del writeup:** Raquel Romero
 
 ---
 ![Descripcion](Images/chocolatefire1.png)
+
+# 📖 Descripción
+
+ChocolateFire es una máquina Linux de dificultad media de DockerLabs cuyo objetivo es comprometer un servicio Openfire vulnerable para obtener acceso al sistema.
+Durante la resolución se emplean técnicas básicas de reconocimiento, enumeración de servicios, identificación de versiones vulnerables y explotación mediante Metasploit, finalizando con la obtención de privilegios de administrador.
 
 ---
 
@@ -30,7 +36,7 @@
 
 ## Despliegue de la maquina
 
-![[chocolatefire2.png]]
+![Descripcion](Images/chocolatefire2.png)
 ---
 
 # 2️⃣ Enumeración
@@ -45,7 +51,7 @@ sudo nmap -p- -sS -sC -sV --min-rate 5000 -n -Pn -vvv 172.17.0.2
 
 ### Resultado
 
-![[chocolatefire3.png]]
+![Descripcion](Images/chocolatefire3.png)
 
 
 ---
@@ -56,7 +62,7 @@ sudo nmap -p- -sS -sC -sV --min-rate 5000 -n -Pn -vvv 172.17.0.2
 Tras observar un número elevado de puertos abiertos, el siguiente paso fue identificar qué servicios estaban ejecutándose en cada uno de ellos. Para ello utilicé **WhatWeb**, una herramienta que permite detectar tecnologías y aplicaciones web, con el objetivo de localizar aquellos servicios que pudieran ser de interés para continuar la investigación.
 
 
-![[chocolatefire4.png]]
+![Descripcion](Images/chocolatefire4.png)
 
 El análisis con WhatWeb mostró que la mayoría de los puertos abiertos no exponían un servicio web accesible. Sin embargo, el **puerto 9090** devolvió información relevante, identificando una aplicación desarrollada en **Java** con un panel de autenticación accesible mediante `login.jsp`. Además, el título de la página indicaba que se trataba de una **Openfire Admin Console**, convirtiéndose en el principal objetivo para continuar con la fase de enumeración
 
@@ -65,7 +71,7 @@ El análisis con WhatWeb mostró que la mayoría de los puertos abiertos no expo
 ## 4️⃣Enumeración de OpenFire
 
 
-![[chocolatefire5.png]]
+![Descripcion](Images/chocolatefire5.png)
 
 Las versiones **4.7.0 hasta 4.7.4** son vulnerables a **CVE-2023-32315**, una vulnerabilidad que permite eludir la autenticación de la consola de administración mediante un fallo en el entorno de configuración
 
@@ -74,20 +80,20 @@ Las versiones **4.7.0 hasta 4.7.4** son vulnerables a **CVE-2023-32315**, una vu
 #  5️⃣ Explotación mediante Metasploit
 
 Se realizó una búsqueda dentro de Metasploit para localizar un módulo compatible con la versión identificada de Openfire.
-![[chocolatefire6.png]]
+![Descripcion](Images/chocolatefire6.png)
 
 En este caso, se indicó la dirección IP de la máquina objetivo mediante el parámetro **RHOSTS** y se verificó la configuración disponible utilizando el comando `show options`.
 
-![[chocolatefire7.png]]
+![Descripcion](Images/chocolatefire7.png)
 
 Además de configurar el objetivo, fue necesario indicar al módulo la dirección IP de la máquina atacante. Para ello se estableció el parámetro **LHOST**, que corresponde al equipo donde se recibirá la conexión inversa una vez que la explotación se complete correctamente.
 
-![[chocolatefire8.png]]
+![Descripcion](Images/chocolatefire8.png)
 
 # 6️⃣Ejecución del exploit
 
 Una vez configurados todos los parámetros del módulo y del payload, se ejecutó el exploit mediante el comando `run`. Durante el proceso, Metasploit comprobó automáticamente que la versión de Openfire era vulnerable y llevó a cabo la explotación del servicio.
-![[chocolatefire9.png]]
+![Descripcion](Images/chocolatefire9.png)
 
 ## Verificación del acceso
 
